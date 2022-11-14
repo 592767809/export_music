@@ -1,8 +1,12 @@
-
+import os
 from server import *
 
 
 def main():
+    if not os.path.exists('./db'):
+        os.makedirs('./db')
+    if not os.path.exists('./song'):
+        os.makedirs('./song')
     print("""1.qq音乐
 2.酷狗概念版""")
     input_type = input('请输入导出类型：')
