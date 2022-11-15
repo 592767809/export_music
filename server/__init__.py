@@ -1,8 +1,9 @@
 
-from server import qqmusic
-from server import kugoumusic
+from server import qqmusic, kugoumusic, kugoulitemusic
+
 
 __all__ = [
     'qqmusic',
     'kugoumusic',
+    'kugoulitemusic',
 ]

@@ -16,11 +16,11 @@ def export_file(song_name, song_suffix, file_url):
 
 def main(ip):
     # 首先下载db数据
-    url = f'http://{ip}/data/data/com.kugou.android/databases/kugou_music_phone_v7.db'
+    url = f'http://{ip}/data/data/com.kugou.android.lite/databases/kugou_music_phone_v7.db'
     response = requests.get(url).content
-    with open('./db/kugou_music_phone_v7.db', 'wb') as f:
+    with open('./db/kugou_music_phone_v7_lite.db', 'wb') as f:
         f.write(response)
-    sql3 = SQL3('./db/kugou_music_phone_v7.db')
+    sql3 = SQL3('./db/kugou_music_phone_v7_lite.db')
     values = sql3.query('''SELECT downloadurl, temppath FROM file_downloading where temppath like '%.kgm%';''')
     song_list = []
     for file_url, file_path in values:
