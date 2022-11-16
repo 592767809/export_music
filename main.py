@@ -7,10 +7,9 @@ def main():
         os.makedirs('./db')
     if not os.path.exists('./song'):
         os.makedirs('./song')
-    print("""1.qq音乐
-2.酷狗音乐
-3.酷狗音乐概念版
-""")
+    print("""1.qq音乐-11.11.0.10
+2.酷狗音乐-11.3.8
+3.酷狗音乐概念版-3.0.0""")
     input_type = input('请输入导出类型：')
     if input_type == '1':
         qqmusic.main(ip)
