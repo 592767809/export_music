@@ -9,32 +9,19 @@ from mysql3.mysql3 import SQL3
 from utils.os import android_listdir, use_song_list, safe_title
 
 
+def popcount(number):
+    return len(bin(number).split('1')) - 1
+
+
 def decrypt_spade_a(spade):
     spade = base64.b64decode(spade.encode())
     slat = spade[0] ^ spade[1] ^ spade[2]
     key_len = len(spade) - slat + 47
-    key_ptr = bytearray(spade[1: 1 + key_len])
-    v2 = 85
-    v3 = 250
-    v5 = 85
+    xor_list = bytes([250, 85]) + spade[1: 1 + key_len]
+    key = bytearray()
     for i in range(key_len):
-        v6 = key_ptr[i]
-        if i % 2 == 1:
-            v6 = v3
-            v5 = key_ptr[i]
-            v3 = v2
-        v7 = v3 ^ key_ptr[i]
-        v8 = 0
-        if i:
-            v9 = i
-            while v9:
-                v8 += 1
-                v9 &= v9 - 1
-        v2 = v5
-        key_ptr[i] = v7 - 21 - v8
-        i += 1
-        v3 = v6
-    return key_ptr[1:-1].decode()
+        key.append((xor_list[i] ^ xor_list[i + 2]) - 21 - popcount(i))
+    return key[1:-1].decode()
 
 
 def export_file(song_name, song_suffix, song_url, song_encrypt, song_spadea):
@@ -76,3 +63,7 @@ def main(ip):
             export_file(safe_title(song_name), song_suffix, song_url, song_encrypt, song_spadea)
         except:
             print(traceback.format_exc())
+
+
+if __name__ == '__main__':
+    print('5011945309e6465581fd0d6971c0e002' == decrypt_spade_a('kLwe+la9BvZLvwzvcaI97HOnPO9ClAroRbgK8Xa5CPBCuAqDgw=='))
