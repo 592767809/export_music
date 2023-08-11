@@ -8,10 +8,12 @@ from utils.os import use_song_list
 
 def export_file(song_name, song_suffix, file_url):
     if os.path.exists('./song/' + song_name + '.' + song_suffix):
+        print('文件已存在：./song/' + song_name + '.' + song_suffix)
         return
     response = requests.get(file_url).content
     with open('./song/' + song_name + '.' + song_suffix, 'wb') as f:
         f.write(response)
+    print('导出成功：./song/' + song_name + '.' + song_suffix)
 
 
 def main(ip):
