@@ -1,5 +1,5 @@
 
-from server import qqmusic, kugoumusic, kugoulitemusic, wangyiyunmusic, qishuimusic
+from server import qqmusic, kugoumusic, kugoulitemusic, wangyiyunmusic, qishuimusic, xuelang
 
 
 __all__ = [
@@ -7,5 +7,6 @@ __all__ = [
     'kugoumusic',
     'kugoulitemusic',
     'wangyiyunmusic',
-    'qishuimusic'
+    'qishuimusic',
+    'xuelang'
 ]

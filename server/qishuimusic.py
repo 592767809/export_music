@@ -6,22 +6,8 @@ import traceback
 import requests
 import json
 from mysql3.mysql3 import SQL3
+from utils.util import decrypt_spade_a
 from utils.os import android_listdir, use_song_list, safe_title
-
-
-def popcount(number):
-    return len(bin(number).split('1')) - 1
-
-
-def decrypt_spade_a(spade):
-    spade = base64.b64decode(spade.encode())
-    slat = spade[0] ^ spade[1] ^ spade[2]
-    key_len = len(spade) - slat + 47
-    xor_list = bytes([250, 85]) + spade[1: 1 + key_len]
-    key = bytearray()
-    for i in range(key_len):
-        key.append((xor_list[i] ^ xor_list[i + 2]) - 21 - popcount(i))
-    return key[1:-1].decode()
 
 
 def export_file(song_name, song_suffix, song_url, song_encrypt, song_spadea):

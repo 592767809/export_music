@@ -11,7 +11,8 @@ def main():
 2.酷狗音乐-11.3.8
 3.酷狗音乐概念版-3.0.0
 4.网易云音乐-8.8.70
-5.汽水音乐6.0.0""")
+5.汽水音乐-6.0.0
+6.学浪-6.7.0""")
     input_type = input('请输入导出类型：')
     if input_type == '1':
         qqmusic.main(ip)
@@ -23,6 +24,8 @@ def main():
         wangyiyunmusic.main(ip)
     elif input_type == '5':
         qishuimusic.main(ip)
+    elif input_type == '6':
+        xuelang.main(ip)
     else:
         input('选择类型错误')
 
