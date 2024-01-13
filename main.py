@@ -12,8 +12,10 @@ def main():
 3.酷狗音乐概念版-3.0.0
 4.网易云音乐-8.8.70
 5.汽水音乐-6.0.0
-6.学浪-6.7.0""")
-    input_type = input('请输入导出类型：')
+6.学浪-6.7.0
+7.悟饭游戏厅-5.0.4.9""")
+    # input_type = input('请输入导出类型：')
+    input_type = '7'
     if input_type == '1':
         qqmusic.main(ip)
     elif input_type == '2':
@@ -26,10 +28,12 @@ def main():
         qishuimusic.main(ip)
     elif input_type == '6':
         xuelang.main(ip)
+    elif input_type == '7':
+        wufanyouxiting.main(ip)
     else:
         input('选择类型错误')
 
 
 if __name__ == '__main__':
-    ip = '192.168.1.89:8000'
+    ip = '192.168.31.23:8000'
     main()
