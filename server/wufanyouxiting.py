@@ -18,7 +18,7 @@ def main(ip):
             with open('./db/mgdb.db', 'wb') as f:
                 f.write(response)
     sql3 = SQL3('./db/mgdb.db')
-    values = sql3.query('''SELECT showName, gameZipPath, sp_tag_info_s FROM downloadtask;''')
+    values = sql3.query('''SELECT showName, gameZipPath, sp_tag_info_s FROM downloadtask where sp_tag_info_s is not null;''')
     song_list = []
     for item in values:  # 可能需要过滤一些东西
         song_list.append(item)
@@ -38,8 +38,8 @@ def main(ip):
         if info['model']['name'] == 'GBA':
             with open('./song/' + showName + '.gba', 'wb') as f:
                 f.write(song)
-        elif info['model']['name'] == '安卓':  # 真实地址不在这里
-            with open('./song/' + showName + '.apk', 'wb') as f:
+        elif info['model']['name'] == 'NDS':
+            with open('./song/' + showName + '.nds', 'wb') as f:
                 f.write(song)
         else:
             print('未知的文件类型：' + info['model']['name'])
