@@ -14,8 +14,7 @@ def main():
 5.汽水音乐-6.0.0
 6.学浪-6.7.0
 7.悟饭游戏厅-5.0.4.9""")
-    # input_type = input('请输入导出类型：')
-    input_type = '7'
+    input_type = input('请输入导出类型：')
     if input_type == '1':
         qqmusic.main(ip)
     elif input_type == '2':
