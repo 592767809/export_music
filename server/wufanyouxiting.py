@@ -36,10 +36,15 @@ def main(ip):
                 song = source.read()
         info = json.loads(sp_tag_info_s)
         if info['model']['name'] == 'GBA':
-            with open('./song/' + showName + '.gba', 'wb') as f:
-                f.write(song)
+            suffix = 'gba'
+        elif info['model']['name'] == 'GBC':
+            suffix = 'gbc'
         elif info['model']['name'] == 'NDS':
-            with open('./song/' + showName + '.nds', 'wb') as f:
-                f.write(song)
+            suffix = 'nds'
+        elif info['model']['name'] == '3DS':
+            suffix = 'cci'
         else:
             print('未知的文件类型：' + info['model']['name'])
+            return
+        with open('./song/' + showName + '.' + suffix, 'wb') as f:
+            f.write(song)
