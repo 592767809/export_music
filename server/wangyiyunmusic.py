@@ -69,7 +69,7 @@ def export_file(song_name, file_url):
 
 def main(ip):
     song_list = []
-    file_path = '/storage/emulated/0/netease/cloudmusic/Music/'
+    file_path = '/storage/emulated/0/Download/netease/cloudmusic/Music/'
     for file_name in android_listdir(ip, file_path):
         if file_name.endswith('.ncm'):
             file_url = f'http://{ip}{file_path}{file_name}'
