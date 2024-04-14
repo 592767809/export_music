@@ -34,5 +34,6 @@ def main():
 
 
 if __name__ == '__main__':
-    ip = '192.168.31.23:8000'
+    ip_addr = str(input("请输入手机的IP地址:\n"))
+    ip = ip_addr + ":8000"
     main()
