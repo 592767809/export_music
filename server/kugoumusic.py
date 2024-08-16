@@ -3,23 +3,25 @@ import os
 import traceback
 import requests
 from mysql3.mysql3 import SQL3
-from utils.os import use_song_list
+from utils.os import use_song_list, android_exists, android_download
 
 
 def export_file(song_name, song_suffix, file_url):
     if os.path.exists('./song/' + song_name + '.' + song_suffix):
+        print('文件已存在：./song/' + song_name + '.' + song_suffix)
         return
     response = requests.get(file_url).content
     with open('./song/' + song_name + '.' + song_suffix, 'wb') as f:
         f.write(response)
+    print('导出成功：./song/' + song_name + '.' + song_suffix)
 
 
 def main(ip):
     # 首先下载db数据
-    url = f'http://{ip}/data/data/com.kugou.android/databases/kugou_music_phone_v7.db'
-    response = requests.get(url).content
-    with open('./db/kugou_music_phone_v7.db', 'wb') as f:
-        f.write(response)
+    android_download(ip, '/data/data/com.kugou.android/databases/kugou_music_phone_v7.db', './db/kugou_music_phone_v7.db')
+    if android_exists(ip, '/data/data/com.kugou.android/databases/kugou_music_phone_v7.db-wal'):
+        android_download(ip, '/data/data/com.kugou.android/databases/kugou_music_phone_v7.db-wal', './db/kugou_music_phone_v7.db-wal')
+        android_download(ip, '/data/data/com.kugou.android/databases/kugou_music_phone_v7.db-shm', './db/kugou_music_phone_v7.db-shm')
     sql3 = SQL3('./db/kugou_music_phone_v7.db')
     values = sql3.query('''SELECT downloadurl, temppath FROM file_downloading where temppath like '%.kgm%';''')
     song_list = []
