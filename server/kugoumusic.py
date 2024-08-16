@@ -23,7 +23,7 @@ def main(ip):
         android_download(ip, '/data/data/com.kugou.android/databases/kugou_music_phone_v7.db-wal', './db/kugou_music_phone_v7.db-wal')
         android_download(ip, '/data/data/com.kugou.android/databases/kugou_music_phone_v7.db-shm', './db/kugou_music_phone_v7.db-shm')
     sql3 = SQL3('./db/kugou_music_phone_v7.db')
-    values = sql3.query('''SELECT downloadurl, temppath FROM file_downloading where temppath like '%.kgm%';''')
+    values = sql3.query('''SELECT downloadurl, temppath FROM file_downloading where temppath like '%.kgm%' or temppath like '%.flac%';''')
     song_list = []
     for file_url, file_path in values:
         song_name, song_suffix = sql3.query(f'SELECT musicname, extname FROM file where filepath="{file_path}";')[0]
