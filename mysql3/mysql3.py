@@ -6,6 +6,7 @@ class SQL3(object):
 
     def __init__(self, file_path):
         self.conn = sqlite3.connect(file_path)
+        # self.conn.execute('PRAGMA journal_mode = OFF')
 
     def query(self, sql):
         cur = self.conn.cursor()

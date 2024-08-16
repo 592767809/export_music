@@ -1,5 +1,21 @@
+
 import re
 import requests
+
+
+def android_exists(ip, file_path):
+    url = f'http://{ip}{file_path}'
+    response = requests.get(url, stream=True)
+    return response.status_code == 200
+
+
+def android_download(ip, file_path, download_path=None):
+    url = f'http://{ip}{file_path}'
+    response = requests.get(url).content
+    if download_path:
+        with open(download_path, 'wb') as f:
+            f.write(response)
+    return response
 
 
 def android_listdir(ip, file_path):
