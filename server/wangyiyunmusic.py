@@ -63,7 +63,7 @@ def export_file(song_name, file_url):
     lenAudioData = len(audioData)
     for i in range(lenAudioData):
         decrypted_file.append(audioData[i] ^ keyBox[i & 0xff])
-    with open('./song/' + musicMetaObj['data']['musicName'] + '.' + musicMetaObj['data']['format'], 'wb') as f:
+    with open('./song/' + ', '.join([art[0] for art in musicMetaObj['data']['artist']]) + ' - ' + musicMetaObj['data']['musicName'] + '.' + musicMetaObj['data']['format'], 'wb') as f:
         f.write(decrypted_file)
 
 
