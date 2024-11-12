@@ -1,9 +1,11 @@
 
+import os
 import traceback
 import requests
 import struct
 import json
 import base64
+from mutagen.flac import FLAC
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from utils.os import android_listdir, use_song_list
@@ -58,13 +60,23 @@ def export_file(song_name, file_url):
     keyDataObj = getKeyData(ncm['filebuffer'], 10)
     keyBox = getKeyBox(keyDataObj['data'])
     musicMetaObj = getMetaData(ncm['filebuffer'], keyDataObj['offset'])
+    file_path = './song/' + ', '.join([art[0] for art in musicMetaObj['data']['artist']]) + ' - ' + musicMetaObj['data']['musicName'] + '.' + musicMetaObj['data']['format']
+    if os.path.exists(file_path):
+        print('文件已存在：' + file_path)
+        return
     audioOffset = musicMetaObj['offset'] + struct.unpack("<I", ncm['filebuffer'][musicMetaObj['offset'] + 5: musicMetaObj['offset'] + 5 + 4])[0] + 13
     audioData = ncm['filebuffer'][audioOffset:]
     lenAudioData = len(audioData)
     for i in range(lenAudioData):
         decrypted_file.append(audioData[i] ^ keyBox[i & 0xff])
-    with open('./song/' + ', '.join([art[0] for art in musicMetaObj['data']['artist']]) + ' - ' + musicMetaObj['data']['musicName'] + '.' + musicMetaObj['data']['format'], 'wb') as f:
+    with open(file_path, 'wb') as f:
         f.write(decrypted_file)
+    if musicMetaObj['data']['format'] == 'flac':
+        audio = FLAC(file_path)
+        audio['artist'] = ', '.join([art[0] for art in musicMetaObj['data']['artist']])
+        audio['title'] = musicMetaObj['data']['musicName']
+        audio['album'] = musicMetaObj['data']['album']
+        audio.save()
 
 
 def main(ip):
